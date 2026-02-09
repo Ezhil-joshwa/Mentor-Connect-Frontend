@@ -66,7 +66,7 @@ const Navbar = ({ userName, userRole }: NavbarProps) => {
 
   return (
     <header
-      className={`h-16 flex items-center justify-between px-6 z-50 transition-transform duration-300 fixed md:relative w-full ${isVisible ? 'translate-y-0 bg-transparent backdrop-blur-sm' : '-translate-y-full'
+      className={`h-16 flex items-center justify-between px-6 z-50 transition-transform duration-300 fixed md:relative w-full ${isVisible ? 'translate-y-0 bg-white/5 backdrop-blur-md border-b border-white/10' : '-translate-y-full'
         } md:translate-y-0`}
     >
       <div className="flex items-center gap-4">

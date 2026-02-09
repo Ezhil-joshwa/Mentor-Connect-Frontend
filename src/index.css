@@ -139,9 +139,9 @@
 
 @layer components {
   .card-elevated {
-    @apply bg-card rounded-xl border border-border/50;
-    box-shadow: var(--shadow-card);
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
+    @apply rounded-xl border border-white/20 backdrop-blur-md bg-white/10;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: box-shadow 0.2s ease, transform 0.2s ease, background-color 0.2s ease;
   }
 
   .card-elevated:hover {
@@ -198,7 +198,7 @@
   }
 
   .input-field {
-    @apply w-full px-4 py-2.5 rounded-lg border border-input bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent transition-all duration-200;
+    @apply w-full px-4 py-2.5 rounded-lg border border-white/20 bg-white/10 text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:bg-white/15 focus:border-white/30 transition-all duration-200 backdrop-blur-sm;
   }
 
   .btn-primary {

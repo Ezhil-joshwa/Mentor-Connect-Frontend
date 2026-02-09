@@ -32,9 +32,9 @@ const benefits = [
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-custom text-white">
       {/* Hero Section */}
-      <header className="bg-gradient-to-br from-sidebar to-sidebar/90 text-sidebar-foreground">
+      <header className="bg-transparent text-white">
         <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <img src={emmaLogo} alt="Mentor Connect Logo" className="w-10 h-10 rounded-xl object-cover" />
@@ -42,7 +42,7 @@ const Index = () => {
           </div>
           <div className="flex items-center gap-4">
             <Link to="/login">
-              <Button variant="ghost" className="text-sidebar-foreground hover:bg-sidebar-accent">
+              <Button variant="ghost" className="text-white hover:bg-white/10 hover:text-white">
                 Login
               </Button>
             </Link>
@@ -56,7 +56,7 @@ const Index = () => {
 
         <div className="container mx-auto px-6 py-20 text-center">
           <div className="max-w-3xl mx-auto space-y-6">
-            <div className="inline-flex items-center gap-2 bg-sidebar-accent px-4 py-2 rounded-full text-sm">
+            <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 rounded-full text-sm text-white shadow-sm">
               <span className="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
               Empowering academic success through mentorship
             </div>
@@ -85,7 +85,7 @@ const Index = () => {
       </header>
 
       {/* Features Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-transparent">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl font-bold text-foreground mb-4">
@@ -115,7 +115,7 @@ const Index = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-white/5 backdrop-blur-sm">
         <div className="container mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
@@ -170,7 +170,7 @@ const Index = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-transparent">
         <div className="container mx-auto px-6 text-center">
           <div className="card-elevated max-w-3xl mx-auto p-12 bg-gradient-to-br from-primary/5 to-accent">
             <h2 className="text-3xl font-bold text-foreground mb-4">
@@ -190,7 +190,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-sidebar text-sidebar-foreground py-8">
+      <footer className="bg-black/20 text-white/80 py-8">
         <div className="container mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
             <img src={emmaLogo} alt="Mentor Connect Logo" className="w-8 h-8 rounded-lg object-cover" />
