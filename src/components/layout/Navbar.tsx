@@ -1,6 +1,7 @@
 import { Bell, LogOut, User } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import emmaLogo from '@/assets/emma.png';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -28,42 +29,40 @@ const Navbar = ({ userName, userRole }: NavbarProps) => {
 
   const getRoleBadgeColor = (role: string) => {
     switch (role) {
-      case 'admin': return 'bg-destructive/10 text-destructive';
-      case 'mentor': return 'bg-primary/10 text-primary';
-      case 'student': return 'bg-info/10 text-info';
-      default: return 'bg-muted text-muted-foreground';
+      case 'admin': return 'bg-orange-500/20 text-orange-200';
+      case 'mentor': return 'bg-blue-500/20 text-blue-200';
+      case 'student': return 'bg-green-500/20 text-green-200';
+      default: return 'bg-white/10 text-white/70';
     }
   };
 
   return (
-    <header className="h-16 bg-card border-b border-border flex items-center justify-between px-6 sticky top-0 z-50">
+    <header className="h-16 bg-transparent flex items-center justify-between px-6 sticky top-0 z-50">
       <div className="flex items-center gap-4">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-sm">MC</span>
-          </div>
-          <span className="font-semibold text-lg text-foreground">Mentor Connect</span>
+          <img src={emmaLogo} alt="Mentor Connect Logo" className="w-8 h-8 rounded-lg object-cover" />
+          <span className="font-semibold text-lg text-white">Mentor Connect</span>
         </Link>
       </div>
 
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="relative">
-          <Bell className="h-5 w-5 text-muted-foreground" />
-          <span className="absolute -top-1 -right-1 w-4 h-4 bg-destructive text-destructive-foreground text-xs rounded-full flex items-center justify-center">
+        <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white">
+          <Bell className="h-5 w-5" />
+          <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
             3
           </span>
         </Button>
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-3 px-2">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback className="bg-primary/10 text-primary text-sm">
+            <Button variant="ghost" className="flex items-center gap-3 px-2 hover:bg-white/10 text-white">
+              <Avatar className="h-8 w-8 border-2 border-white/20">
+                <AvatarFallback className="bg-purple-500 text-white text-sm">
                   {getInitials(userName)}
                 </AvatarFallback>
               </Avatar>
               <div className="hidden md:flex flex-col items-start">
-                <span className="text-sm font-medium text-foreground">{userName}</span>
+                <span className="text-sm font-medium">{userName}</span>
                 <span className={`text-xs px-2 py-0.5 rounded-full capitalize ${getRoleBadgeColor(userRole)}`}>
                   {userRole}
                 </span>

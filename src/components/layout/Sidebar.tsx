@@ -47,23 +47,23 @@ const mentorLinks = [
 
 const Sidebar = ({ role }: SidebarProps) => {
   const location = useLocation();
-  
+
   const links = role === 'admin' ? adminLinks : role === 'mentor' ? mentorLinks : studentLinks;
 
   return (
-    <aside className="w-64 bg-sidebar min-h-[calc(100vh-4rem)] flex flex-col">
+    <aside className="w-64 h-full flex flex-col border-r border-white/10">
       <nav className="flex-1 p-4 space-y-1">
         {links.map((link) => {
           const isActive = location.pathname === link.href;
           const Icon = link.icon;
-          
+
           return (
             <Link
               key={link.href}
               to={link.href}
               className={cn(
-                'sidebar-link',
-                isActive && 'active'
+                'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 glass-sidebar-item text-white/80 hover:text-white',
+                isActive && 'active text-white bg-white/10'
               )}
             >
               <Icon className="h-5 w-5" />
@@ -73,10 +73,10 @@ const Sidebar = ({ role }: SidebarProps) => {
         })}
       </nav>
 
-      <div className="p-4 border-t border-sidebar-border">
-        <div className="bg-sidebar-accent rounded-lg p-4">
-          <p className="text-sm text-sidebar-foreground/70">Need help?</p>
-          <p className="text-xs text-sidebar-muted mt-1">Contact support for assistance</p>
+      <div className="p-4 border-t border-white/10">
+        <div className="bg-white/5 rounded-lg p-4 backdrop-blur-sm">
+          <p className="text-sm text-white/90">Need help?</p>
+          <p className="text-xs text-white/50 mt-1">Contact support for assistance</p>
         </div>
       </div>
     </aside>

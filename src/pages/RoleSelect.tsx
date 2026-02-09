@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { Shield, GraduationCap, Users, ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import emmaLogo from '@/assets/emma.png';
 
 const roles = [
   {
@@ -51,7 +52,7 @@ const RoleSelect = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-muted flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gradient-custom flex items-center justify-center p-6">
       <div className="w-full max-w-4xl">
         <Link to="/" className="inline-flex items-center gap-2 text-muted-foreground hover:text-foreground mb-8">
           <ArrowLeft className="h-4 w-4" />
@@ -59,9 +60,7 @@ const RoleSelect = () => {
         </Link>
 
         <div className="text-center mb-12">
-          <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-primary flex items-center justify-center">
-            <span className="text-primary-foreground font-bold text-xl">MC</span>
-          </div>
+          <img src={emmaLogo} alt="Mentor Connect Logo" className="w-16 h-16 mx-auto mb-4 rounded-2xl object-cover" />
           <h1 className="text-3xl font-bold text-foreground">Choose Your Role</h1>
           <p className="text-muted-foreground mt-2">Select how you'll be using Mentor Connect</p>
         </div>

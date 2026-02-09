@@ -10,11 +10,11 @@ interface DashboardLayoutProps {
 
 const DashboardLayout = ({ children, role, userName }: DashboardLayoutProps) => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-screen bg-gradient-custom flex flex-col overflow-hidden">
       <Navbar userName={userName} userRole={role} />
-      <div className="flex">
+      <div className="flex flex-1 overflow-hidden">
         <Sidebar role={role} />
-        <main className="flex-1 p-6 overflow-auto">
+        <main className="flex-1 p-6 overflow-y-auto">
           <div className="animate-fade-in">
             {children}
           </div>

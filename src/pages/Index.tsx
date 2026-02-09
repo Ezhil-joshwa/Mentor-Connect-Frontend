@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Users, GraduationCap, Shield, ArrowRight, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import emmaLogo from '@/assets/emma.png';
 
 const features = [
   {
@@ -36,9 +37,7 @@ const Index = () => {
       <header className="bg-gradient-to-br from-sidebar to-sidebar/90 text-sidebar-foreground">
         <nav className="container mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold">MC</span>
-            </div>
+            <img src={emmaLogo} alt="Mentor Connect Logo" className="w-10 h-10 rounded-xl object-cover" />
             <span className="font-bold text-xl">Mentor Connect</span>
           </div>
           <div className="flex items-center gap-4">
@@ -76,7 +75,7 @@ const Index = () => {
                 </Button>
               </Link>
               <Link to="/login">
-                <Button size="lg" variant="outline" className="border-sidebar-border text-sidebar-foreground hover:bg-sidebar-accent">
+                <Button size="lg" variant="outline" className="bg-white text-primary border-white hover:bg-gray-100 hover:text-primary">
                   Sign In
                 </Button>
               </Link>
@@ -99,7 +98,7 @@ const Index = () => {
 
           <div className="grid md:grid-cols-3 gap-8">
             {features.map((feature, index) => (
-              <div 
+              <div
                 key={feature.title}
                 className="card-elevated p-8 text-center group hover:-translate-y-1 transition-transform duration-300"
                 style={{ animationDelay: `${index * 0.1}s` }}
@@ -194,9 +193,7 @@ const Index = () => {
       <footer className="bg-sidebar text-sidebar-foreground py-8">
         <div className="container mx-auto px-6 text-center">
           <div className="flex items-center justify-center gap-2 mb-4">
-            <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-              <span className="text-primary-foreground font-bold text-sm">MC</span>
-            </div>
+            <img src={emmaLogo} alt="Mentor Connect Logo" className="w-8 h-8 rounded-lg object-cover" />
             <span className="font-semibold">Mentor Connect</span>
           </div>
           <p className="text-sidebar-muted text-sm">

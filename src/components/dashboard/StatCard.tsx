@@ -37,7 +37,7 @@ const StatCard = ({ title, value, subtitle, icon: Icon, trend, variant = 'defaul
           <p className="text-sm font-medium text-muted-foreground">{title}</p>
           <p className="text-3xl font-bold text-foreground">{value}</p>
           {subtitle && (
-            <p className="text-sm text-muted-foreground">{subtitle}</p>
+            <p className="text-sm text-white/70">{subtitle}</p>
           )}
           {trend && (
             <div className={cn(
@@ -45,7 +45,7 @@ const StatCard = ({ title, value, subtitle, icon: Icon, trend, variant = 'defaul
               trend.isPositive ? 'text-success' : 'text-destructive'
             )}>
               <span>{trend.isPositive ? '↑' : '↓'} {Math.abs(trend.value)}%</span>
-              <span className="text-muted-foreground">vs last month</span>
+              <span className="text-white/60">vs last month</span>
             </div>
           )}
         </div>
