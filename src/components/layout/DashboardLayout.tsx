@@ -14,7 +14,7 @@ const DashboardLayout = ({ children, role, userName }: DashboardLayoutProps) => 
       <Navbar userName={userName} userRole={role} />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar role={role} />
-        <main className="flex-1 p-6 overflow-y-auto">
+        <main id="main-content" className="flex-1 p-6 pt-20 md:pt-6 overflow-y-auto">
           <div className="animate-fade-in">
             {children}
           </div>

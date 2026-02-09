@@ -1,4 +1,4 @@
-import { Bell, LogOut, User } from 'lucide-react';
+import { Bell, LogOut, User, Menu } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import emmaLogo from '@/assets/emma.png';
@@ -10,6 +10,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { SidebarContent } from './Sidebar';
+import { useState, useEffect, useRef } from 'react';
 
 interface NavbarProps {
   userName: string;
@@ -18,6 +21,31 @@ interface NavbarProps {
 
 const Navbar = ({ userName, userRole }: NavbarProps) => {
   const navigate = useNavigate();
+  const [isVisible, setIsVisible] = useState(true);
+  const lastScrollY = useRef(0);
+
+  useEffect(() => {
+    const mainContent = document.getElementById('main-content');
+    if (!mainContent) return;
+
+    const handleScroll = () => {
+      const currentScrollY = mainContent.scrollTop;
+
+      // Show header if scrolling up or at top
+      // Using ref allows us to access current value without re-binding listener
+      if (currentScrollY < lastScrollY.current) {
+        setIsVisible(true);
+      } else if (currentScrollY > lastScrollY.current && currentScrollY > 50) {
+        // Hide only if scrolling down and not at very top
+        setIsVisible(false);
+      }
+
+      lastScrollY.current = currentScrollY;
+    };
+
+    mainContent.addEventListener('scroll', handleScroll);
+    return () => mainContent.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = () => {
     navigate('/login');
@@ -37,16 +65,22 @@ const Navbar = ({ userName, userRole }: NavbarProps) => {
   };
 
   return (
-    <header className="h-16 bg-transparent flex items-center justify-between px-6 sticky top-0 z-50">
+    <header
+      className={`h-16 flex items-center justify-between px-6 z-50 transition-transform duration-300 fixed md:relative w-full ${isVisible ? 'translate-y-0 bg-transparent backdrop-blur-sm' : '-translate-y-full'
+        } md:translate-y-0`}
+    >
       <div className="flex items-center gap-4">
-        <Link to="/" className="flex items-center gap-2">
-          <img src={emmaLogo} alt="Mentor Connect Logo" className="w-8 h-8 rounded-lg object-cover" />
-          <span className="font-semibold text-lg text-white">Mentor Connect</span>
-        </Link>
+        {/* Mobile menu trigger + Logo on left */}
+        <div className="flex items-center gap-2">
+          <Link to="/" className="flex items-center gap-2">
+            <img src={emmaLogo} alt="Mentor Connect Logo" className="w-8 h-8 rounded-lg object-cover" />
+            <span className="font-semibold text-lg text-white">Mentor Connect</span>
+          </Link>
+        </div>
       </div>
 
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white">
+        <Button variant="ghost" size="icon" className="relative hover:bg-white/10 text-white hidden md:flex">
           <Bell className="h-5 w-5" />
           <span className="absolute -top-1 -right-1 w-4 h-4 bg-red-500 text-white text-xs rounded-full flex items-center justify-center">
             3
@@ -55,7 +89,7 @@ const Navbar = ({ userName, userRole }: NavbarProps) => {
 
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="flex items-center gap-3 px-2 hover:bg-white/10 text-white">
+            <Button variant="ghost" className="hidden md:flex items-center gap-3 px-2 hover:bg-white/10 text-white">
               <Avatar className="h-8 w-8 border-2 border-white/20">
                 <AvatarFallback className="bg-purple-500 text-white text-sm">
                   {getInitials(userName)}
@@ -81,6 +115,18 @@ const Navbar = ({ userName, userRole }: NavbarProps) => {
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        {/* Mobile Menu Trigger - Right Side as requested */}
+        <Sheet>
+          <SheetTrigger asChild>
+            <Button variant="ghost" size="icon" className="md:hidden hover:bg-white/10 text-white">
+              <Menu className="h-6 w-6" />
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="p-0 border-r border-white/10 w-72 bg-gradient-custom">
+            <SidebarContent role={userRole} />
+          </SheetContent>
+        </Sheet>
       </div>
     </header>
   );

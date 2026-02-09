@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from 'react-router-dom';
 import { cn } from '@/lib/utils';
 import {
@@ -45,13 +46,13 @@ const mentorLinks = [
   { href: '/mentor/announcements', label: 'Announcements', icon: Megaphone },
 ];
 
-const Sidebar = ({ role }: SidebarProps) => {
+export const SidebarContent = ({ role }: SidebarProps) => {
   const location = useLocation();
 
   const links = role === 'admin' ? adminLinks : role === 'mentor' ? mentorLinks : studentLinks;
 
   return (
-    <aside className="w-64 h-full flex flex-col border-r border-white/10">
+    <div className="flex flex-col h-full w-full">
       <nav className="flex-1 p-4 space-y-1">
         {links.map((link) => {
           const isActive = location.pathname === link.href;
@@ -79,6 +80,14 @@ const Sidebar = ({ role }: SidebarProps) => {
           <p className="text-xs text-white/50 mt-1">Contact support for assistance</p>
         </div>
       </div>
+    </div>
+  );
+};
+
+const Sidebar = ({ role }: SidebarProps) => {
+  return (
+    <aside className="w-64 h-full hidden md:flex flex-col border-r border-white/10">
+      <SidebarContent role={role} />
     </aside>
   );
 };
