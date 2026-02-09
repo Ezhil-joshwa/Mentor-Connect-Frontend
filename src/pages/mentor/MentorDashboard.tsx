@@ -3,19 +3,52 @@ import StatCard from '@/components/dashboard/StatCard';
 import AnnouncementCard from '@/components/dashboard/AnnouncementCard';
 import MeetingCard from '@/components/dashboard/MeetingCard';
 import { Users, Calendar, TrendingUp, CheckCircle } from 'lucide-react';
-import { mentorStats, announcements, meetings, currentMentor, students } from '@/data/mockData';
+import { announcements, meetings, students } from '@/data/mockData';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import api from '@/lib/api';
 
 const MentorDashboard = () => {
-  const assignedStudents = students.filter(s => s.mentorId === currentMentor.id);
-  const mentorMeetings = meetings.filter(m => m.participants.includes(currentMentor.id));
+  const [stats, setStats] = useState({
+    assignedStudents: 0,
+    upcomingMeetings: 0,
+    completedSessions: 0,
+    averageStudentPerformance: 85,
+  });
+  const [userName, setUserName] = useState('Mentor');
+
+  // Mock data for lists
+  const assignedStudents = students;
+  const mentorMeetings = meetings;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedName = localStorage.getItem('userName');
+        if (storedName) setUserName(storedName);
+
+        const response = await api.get('/dashboard/stats');
+        const data = response.data;
+
+        setStats({
+          assignedStudents: data.assigned_students || 0,
+          upcomingMeetings: data.upcoming_meetings || 0,
+          completedSessions: 15, // Mock
+          averageStudentPerformance: 82, // Mock
+        });
+      } catch (error) {
+        console.error('Error fetching mentor stats:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
-    <DashboardLayout role="mentor" userName={currentMentor.name}>
+    <DashboardLayout role="mentor" userName={userName}>
       <div className="page-header">
-        <h1 className="page-title">Welcome back, {currentMentor.name.split(' ')[0]}!</h1>
+        <h1 className="page-title">Welcome back, {userName.split(' ')[0]}!</h1>
         <p className="page-subtitle">Here's an overview of your mentorship activities</p>
       </div>
 
@@ -23,25 +56,25 @@ const MentorDashboard = () => {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
           title="Assigned Students"
-          value={mentorStats.assignedStudents}
+          value={stats.assignedStudents}
           icon={Users}
           variant="primary"
         />
         <StatCard
           title="Upcoming Meetings"
-          value={mentorStats.upcomingMeetings}
+          value={stats.upcomingMeetings}
           icon={Calendar}
           variant="warning"
         />
         <StatCard
           title="Completed Sessions"
-          value={mentorStats.completedSessions}
+          value={stats.completedSessions}
           icon={CheckCircle}
           variant="success"
         />
         <StatCard
           title="Avg. Student Performance"
-          value={`${mentorStats.averageStudentPerformance}%`}
+          value={`${stats.averageStudentPerformance}%`}
           icon={TrendingUp}
           variant="info"
         />

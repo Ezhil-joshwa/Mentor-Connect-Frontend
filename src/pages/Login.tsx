@@ -3,9 +3,10 @@ import { useNavigate, Link } from 'react-router-dom';
 import { Eye, EyeOff, ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
+import api from '@/lib/api';
 
 const Login = () => {
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -16,24 +17,48 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate login - in real app, this would validate against backend
-    setTimeout(() => {
-      // Dummy validation
-      if (email && password.length >= 4) {
-        toast({
-          title: 'Login Successful',
-          description: 'Redirecting to role selection...',
-        });
-        navigate('/role-select');
-      } else {
-        toast({
-          title: 'Login Failed',
-          description: 'Please enter valid credentials.',
-          variant: 'destructive',
-        });
+    try {
+      const response = await api.post('/auth/login', {
+        username,
+        password,
+      });
+
+      const { token, role, username: user_name } = response.data;
+
+      // Store in localStorage
+      localStorage.setItem('token', token);
+      localStorage.setItem('userRole', role);
+      localStorage.setItem('userName', user_name);
+
+      toast({
+        title: 'Login Successful',
+        description: `Welcome back, ${user_name}!`,
+      });
+
+      // Redirect based on role
+      switch (role) {
+        case 'admin':
+          navigate('/admin');
+          break;
+        case 'mentor':
+          navigate('/mentor');
+          break;
+        case 'student':
+          navigate('/student');
+          break;
+        default:
+          navigate('/');
       }
+    } catch (error: any) {
+      console.error('Login error:', error);
+      toast({
+        title: 'Login Failed',
+        description: error.response?.data?.message || 'Invalid credentials or server error.',
+        variant: 'destructive',
+      });
+    } finally {
       setIsLoading(false);
-    }, 1000);
+    }
   };
 
   return (
@@ -55,15 +80,15 @@ const Login = () => {
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
-                Email Address
+              <label htmlFor="username" className="block text-sm font-medium text-foreground mb-2">
+                Username
               </label>
               <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
+                id="username"
+                type="text"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                placeholder="Enter your username"
                 className="input-field"
                 required
               />
@@ -117,10 +142,6 @@ const Login = () => {
             </p>
           </div>
         </div>
-
-        <p className="text-center text-sm text-muted-foreground mt-6">
-          Demo: Enter any email and password (min 4 chars) to continue
-        </p>
       </div>
     </div>
   );

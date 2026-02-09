@@ -3,18 +3,49 @@ import StatCard from '@/components/dashboard/StatCard';
 import AnnouncementCard from '@/components/dashboard/AnnouncementCard';
 import MeetingCard from '@/components/dashboard/MeetingCard';
 import { BarChart3, Calendar, CheckCircle, Clock } from 'lucide-react';
-import { studentStats, announcements, meetings, currentStudent, currentMentorForStudent } from '@/data/mockData';
+import { announcements, meetings, currentMentorForStudent } from '@/data/mockData';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import api from '@/lib/api';
 
 const StudentDashboard = () => {
-  const studentMeetings = meetings.filter(m => m.participants.includes(currentStudent.id));
+  const [stats, setStats] = useState({
+    attendanceRate: 0,
+    performanceScore: 85,
+    upcomingMeetings: 0,
+    completedSessions: 0,
+  });
+  const [userName, setUserName] = useState('Student');
+  const studentMeetings = meetings;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const storedName = localStorage.getItem('userName');
+        if (storedName) setUserName(storedName);
+
+        const response = await api.get('/dashboard/stats');
+        const data = response.data;
+
+        setStats({
+          attendanceRate: parseInt(data.attendance) || 95,
+          performanceScore: 88,
+          upcomingMeetings: data.assignments_due || 0,
+          completedSessions: 12,
+        });
+      } catch (error) {
+        console.error('Error fetching student stats:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
   return (
-    <DashboardLayout role="student" userName={currentStudent.name}>
+    <DashboardLayout role="student" userName={userName}>
       <div className="page-header">
-        <h1 className="page-title">Welcome back, {currentStudent.name.split(' ')[0]}!</h1>
+        <h1 className="page-title">Welcome back, {userName.split(' ')[0]}!</h1>
         <p className="page-subtitle">Here's an overview of your mentorship journey</p>
       </div>
 
@@ -22,25 +53,25 @@ const StudentDashboard = () => {
       <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         <StatCard
           title="Attendance Rate"
-          value={`${studentStats.attendanceRate}%`}
+          value={`${stats.attendanceRate}%`}
           icon={CheckCircle}
           variant="success"
         />
         <StatCard
           title="Performance Score"
-          value={`${studentStats.performanceScore}%`}
+          value={`${stats.performanceScore}%`}
           icon={BarChart3}
           variant="primary"
         />
         <StatCard
           title="Upcoming Meetings"
-          value={studentStats.upcomingMeetings}
+          value={stats.upcomingMeetings}
           icon={Calendar}
           variant="warning"
         />
         <StatCard
           title="Completed Sessions"
-          value={studentStats.completedSessions}
+          value={stats.completedSessions}
           icon={Clock}
           variant="info"
         />
