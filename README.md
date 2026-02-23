@@ -8,30 +8,23 @@ To get started with this project locally, follow these steps:
 
 ### Prerequisites
 
-- Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- Node.js & npm installed
 
 ### Installation
 
-1.  Clone the repository:
-    ```sh
-    git clone <YOUR_GIT_URL>
-    ```
-2.  Navigate to the project directory:
-    ```sh
-    cd mentor-connect-hub
-    ```
-3.  Install dependencies:
+1. Clone the repository
+2. Install dependencies:
     ```sh
     npm install
     ```
-4.  Start the development server:
+3. Start the application:
     ```sh
     npm run dev
     ```
 
 ## Technologies Used
 
--   **Frontend Framework**: React with Vite
+-   **Frontend Framework**: React
 -   **Language**: TypeScript
 -   **Styling**: Tailwind CSS
 -   **UI Components**: shadcn-ui

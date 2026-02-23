@@ -2,7 +2,7 @@ import DashboardLayout from '@/components/layout/DashboardLayout';
 import StatCard from '@/components/dashboard/StatCard';
 import AnnouncementCard from '@/components/dashboard/AnnouncementCard';
 import MeetingCard from '@/components/dashboard/MeetingCard';
-import { BarChart3, Calendar, CheckCircle, Clock } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 import { announcements, meetings, currentMentorForStudent } from '@/data/mockData';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -54,25 +54,25 @@ const StudentDashboard = () => {
         <StatCard
           title="Attendance Rate"
           value={`${stats.attendanceRate}%`}
-          icon={CheckCircle}
+          iconUrl="/placeholder.png"
           variant="success"
         />
         <StatCard
           title="Performance Score"
           value={`${stats.performanceScore}%`}
-          icon={BarChart3}
+          iconUrl="/placeholder.png"
           variant="primary"
         />
         <StatCard
           title="Upcoming Meetings"
           value={stats.upcomingMeetings}
-          icon={Calendar}
+          iconUrl="/placeholder.png"
           variant="warning"
         />
         <StatCard
           title="Completed Sessions"
           value={stats.completedSessions}
-          icon={Clock}
+          iconUrl="/placeholder.png"
           variant="info"
         />
       </div>

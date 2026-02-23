@@ -5,7 +5,8 @@ interface StatCardProps {
   title: string;
   value: string | number;
   subtitle?: string;
-  icon: LucideIcon;
+  icon?: LucideIcon;
+  iconUrl?: string;
   trend?: {
     value: number;
     isPositive: boolean;
@@ -29,9 +30,9 @@ const iconBgStyles = {
   info: 'bg-info/10 text-info',
 };
 
-const StatCard = ({ title, value, subtitle, icon: Icon, trend, variant = 'default' }: StatCardProps) => {
+const StatCard = ({ title, value, subtitle, icon: Icon, iconUrl, trend, variant = 'default' }: StatCardProps) => {
   return (
-    <div className={cn('stat-card', variantStyles[variant])}>
+    <div className="stat-card">
       <div className="flex items-start justify-between">
         <div className="space-y-2">
           <p className="text-sm font-medium text-muted-foreground">{title}</p>
@@ -50,7 +51,11 @@ const StatCard = ({ title, value, subtitle, icon: Icon, trend, variant = 'defaul
           )}
         </div>
         <div className={cn('p-3 rounded-lg', iconBgStyles[variant])}>
-          <Icon className="h-6 w-6" />
+          {iconUrl ? (
+            <img src={iconUrl} alt={title} className="h-6 w-6 object-contain" />
+          ) : Icon ? (
+            <Icon className="h-6 w-6" />
+          ) : null}
         </div>
       </div>
     </div>

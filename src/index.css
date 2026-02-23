@@ -152,10 +152,7 @@
     @apply card-elevated p-6 relative overflow-hidden;
   }
 
-  .stat-card::before {
-    content: '';
-    @apply absolute top-0 left-0 right-0 h-1 bg-primary;
-  }
+
 
   .sidebar-link {
     @apply flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground/80 transition-all duration-200;

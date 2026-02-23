@@ -49,11 +49,12 @@ const Login = () => {
         default:
           navigate('/');
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Login error:', error);
+      const errorMessage = (error as { response?: { data?: { message?: string } } }).response?.data?.message || 'Invalid credentials or server error.';
       toast({
         title: 'Login Failed',
-        description: error.response?.data?.message || 'Invalid credentials or server error.',
+        description: errorMessage,
         variant: 'destructive',
       });
     } finally {
